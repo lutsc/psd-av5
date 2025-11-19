@@ -12,12 +12,32 @@ entity design is port(
 end entity;
 
 architecture arch_design of design is
+  
+component alu is port(
+  i_SEL : in std_logic_vector(2 downto 0);
+  i_A   : in std_logic_vector(2 downto 0);
+  i_B   : in std_logic_vector(2 downto 0);
+  o_S   : out std_logic_vector(2 downto 0));
+end component;
+
+signal w_S : std_logic_vector(2 downto 0);
+
 begin
 
-  -- instância da ula
-  -- seletor
-  -- clear/reset
-  -- registrador
-  -- saida
-  
+  u_ALU : alu port map(
+    i_SEL => i_SEL,
+    i_A => i_A,
+    i_B => i_B,
+    o_S => w_S);
+    -- u_ALU : alu port map(i_SEL, i_A, i_B, w_S);
+
+  process(i_CLR_n, i_CLK)
+  begin
+    if (i_CLR_n = '0') then
+      o_S <= (others => '0');
+    elsif (rising_edge(i_CLK) and i_ENA = '1') then
+      o_S <= w_S;
+    end if;
+  end process;
+
 end architecture;

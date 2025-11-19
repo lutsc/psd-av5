@@ -9,6 +9,6 @@ entity adder is port(
 end entity;
 
 architecture arch_adder of adder is
-begin 
+begin
 
 end architecture;
