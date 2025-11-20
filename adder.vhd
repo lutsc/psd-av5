@@ -11,11 +11,15 @@ entity adder is port(
 end entity;
 
 architecture arch_adder of adder is
--- signal w_TEMP : std_logic_vector(3 downto 0);
+
+  -- signal w_TEMP : std_logic_vector(3 downto 0);
 signal w_TEMP : std_logic_vector(2 downto 0);
+
 begin
+
 -- w_TEMP <= std_logic_vector('0' & unsigned(i_A) + unsigned('0' & i_B) + ("000" & i_C));
 w_TEMP <= std_logic_vector(unsigned(i_A) + unsigned(i_B) + ("00" & i_C));
 o_S <= w_TEMP(2 downto 0);
 -- o_C <= w_TEMP(3);
+
 end architecture;

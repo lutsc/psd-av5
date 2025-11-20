@@ -24,20 +24,20 @@ signal w_S : std_logic_vector(2 downto 0);
 
 begin
 
-  u_ALU : alu port map(
-    i_SEL => i_SEL,
-    i_A => i_A,
-    i_B => i_B,
-    o_S => w_S);
-    -- u_ALU : alu port map(i_SEL, i_A, i_B, w_S);
+u_ALU : alu port map(
+  i_SEL => i_SEL,
+  i_A => i_A,
+  i_B => i_B,
+  o_S => w_S);
+  -- u_ALU : alu port map(i_SEL, i_A, i_B, w_S);
 
-  process(i_CLR_n, i_CLK)
-  begin
-    if (i_CLR_n = '0') then
-      o_S <= (others => '0');
-    elsif (rising_edge(i_CLK) and i_ENA = '1') then
-      o_S <= w_S;
-    end if;
-  end process;
+process(i_CLR_n, i_CLK)
+begin
+  if (i_CLR_n = '0') then
+    o_S <= (others => '0');
+  elsif (rising_edge(i_CLK) and i_ENA = '1') then
+    o_S <= w_S;
+  end if;
+end process;
 
 end architecture;
