@@ -20,49 +20,47 @@ begin
     o_A <= i_A;
     o_B <= i_B;
     o_C <= '0';
+
   when "001" =>
     o_A <= i_A;
-    o_B <= i_B;
+    o_B <= not i_B;
     o_C <= '1';
+
   when "010" =>
     o_A <= i_A;
     o_B <= (others => '0');
     o_C <= '1';
+
   when "011" =>
     o_A <= i_A;
     o_B <= (others => '0');
     o_C <= '0';
+
   when "100" =>
     o_A <= i_A and i_B;
     o_B <= (others => '0');
     o_C <= '0';
+  
   when "101" =>
     o_A <= i_A or i_B;
     o_B <= (others => '0');
     o_C <= '0';
+
   when "110" =>
     o_A <= i_A xor i_B;
     o_B <= (others => '0');
     o_C <= '0';
+
   when "111" =>
     o_A <= not i_A;
     o_B <= (others => '0');
     o_C <= '0';
+
   when others => 
     o_A <= i_A;
-    o_B <= (others => '0');
+    o_B <= i_B;
     o_C <= '0';
   end case;
 end process;
-
--- i_SEL
--- "000" -> S = A + B
--- "001" -> S = A - B
--- "010" -> S = A + 1
--- "011" -> S = A
--- "100" -> S = A and B (bitwise)
--- "101" -> S = A or B (bitwise)
--- "110" -> S = A xor B (bitwise)
--- "111" -> S = not A (bitwise complement)
 
 end architecture;
