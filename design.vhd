@@ -31,9 +31,9 @@ u_ALU : alu port map(
   o_S => w_S);
   -- u_ALU : alu port map(i_SEL, i_A, i_B, w_S);
 
-process(i_CLR_n, i_CLK)
+process(i_CLR_n, i_CLK, i_ENA)
 begin
-  if (i_CLR_n = '0') then
+  if (i_CLR_n = '1') then
     o_S <= (others => '0');
   elsif (rising_edge(i_CLK) and i_ENA = '1') then
     o_S <= w_S;

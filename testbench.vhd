@@ -16,8 +16,11 @@ component design is port(
   o_S     : out std_logic_vector(2 downto 0));
 end component;
 
-signal w_CLR_n, w_CLK, w_ENA : std_logic := '0';
-signal w_SEL, w_A, w_B, w_S : std_logic_vector(2 downto 0) := "000";
+signal w_CLR_n : std_logic := '1';
+signal w_CLK : std_logic := '0';
+signal w_ENA : std_logic := '0';
+signal w_SEL, w_A, w_B : std_logic_vector(2 downto 0) := "000";
+signal w_S : std_logic_vector(2 downto 0) := "000";
 constant c_PERIOD : time := 1 ns;
 
 begin
@@ -31,15 +34,12 @@ u_DUT : design port map(
   i_B => w_B,
   o_S => w_S);
 
+w_CLR_n <= '0' after c_PERIOD/2;
 w_CLK <= not w_CLK after c_PERIOD/2;
-w_CLR_n <= '1' after c_PERIOD/2;
+w_ENA <= '1' after c_PERIOD/2;
 
 p_INPUTS: process
 begin
-
-  -- Ativando ENABLE
-  w_ENA <= '1';
-  wait for c_PERIOD;
 
   -- Adder
   w_SEL <= "000";
@@ -50,50 +50,36 @@ begin
   
   -- Subtractor
   w_SEL <= "001";
-  w_A <= "101";
-  w_B <= "011";
   wait for c_PERIOD;
-  assert(w_S = "010") report "Falha no Subractor." severity error;
+  assert(w_S = "010") report "Falha no Subtractor." severity error;
 
   -- Counter
   w_SEL <= "010";
-  w_A <= "101";
-  w_B <= "011";
   wait for c_PERIOD;
   assert(w_S = "110") report "Falha no Counter." severity error;
 
   -- Pass
   w_SEL <= "011";
-  w_A <= "101";
-  w_B <= "011";
   wait for c_PERIOD;
   assert(w_S = "101") report "Falha no Pass." severity error;
 
   -- AND
   w_SEL <= "100";
-  w_A <= "101";
-  w_B <= "011";
   wait for c_PERIOD;
   assert(w_S = "001") report "Falha no AND." severity error;
 
   -- OR
   w_SEL <= "101";
-  w_A <= "101";
-  w_B <= "011";
   wait for c_PERIOD;
   assert(w_S = "111") report "Falha no OR." severity error;
 
   -- XOR
   w_SEL <= "110";
-  w_A <= "101";
-  w_B <= "011";
   wait for c_PERIOD;
   assert(w_S = "110") report "Falha no XOR." severity error;
 
   -- NOT
   w_SEL <= "111";
-  w_A <= "101";
-  w_B <= "011";
   wait for c_PERIOD;
   assert(w_S = "010") report "Falha no NOT." severity error;
   
